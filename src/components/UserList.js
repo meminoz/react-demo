@@ -1,16 +1,19 @@
-import axios from "axios";
-import React, { useEffect } from "react";
+import React from "react";
 import SingleUser from "./SingleUser";
-function UserList() {
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUser } from "../store/ui-slice";
+const UserList = async () => {
   const [users, setName] = React.useState([]);
   const [id, setId] = React.useState(5);
-  const fetUser = async () => {
-    const respose = await axios.get(`https://randomuser.me/api/?results=${id}`);
-    setName(respose.data.results);
+  const dispatch = useDispatch();
+  const run = () => {
+    dispatch(fetchUser(id));
   };
-  useEffect(() => {
-    fetUser();
-  }, [id]);
+  run();
+  const name = await useSelector((state) => state.counter.names);
+
+  setName(name);
+
   const idHandler = (event) => {
     setId(event.target.value);
   };
@@ -26,6 +29,6 @@ function UserList() {
       </ul>
     </div>
   );
-}
+};
 
 export default UserList;
