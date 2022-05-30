@@ -1,22 +1,17 @@
 import React from "react";
 import SingleUser from "./SingleUser";
-import { useSelector, useDispatch } from "react-redux";
-import { fetchUser } from "../store/ui-slice";
-const UserList = async () => {
-  const [users, setName] = React.useState([]);
-  const [id, setId] = React.useState(5);
-  const dispatch = useDispatch();
-  const run = () => {
-    dispatch(fetchUser(id));
-  };
-  run();
-  const name = await useSelector((state) => state.counter.names);
+import { useSelector } from "react-redux";
 
-  setName(name);
+const UserList = async () => {
+  const [id, setId] = React.useState(5);
+
+  const users = useSelector((state) => state.counters.users);
 
   const idHandler = (event) => {
     setId(event.target.value);
   };
+  console.log(users);
+
   return (
     <div className="user-list">
       <input type={"text"} onChange={idHandler} />
